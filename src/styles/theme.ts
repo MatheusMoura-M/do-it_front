@@ -1,12 +1,21 @@
 import { extendTheme } from "@chakra-ui/react";
 
+const breakpoints = {
+  sm: "30em", // 480px
+  md: "48em", // 768px
+  lg: "62em", // 992px
+  xl: "80em", // 1280px
+  "2xl": "96em", // 1536px
+};
+
 export const theme = extendTheme({
+  breakpoints,
   color: {
     purple: {
       500: "#8615df",
       600: "#570e91",
-      700: "#38085c",
-      800: "#190429",
+      800: "#38085c",
+      900: "#190429",
     },
     gray: {
       50: "#f6f6f7",
