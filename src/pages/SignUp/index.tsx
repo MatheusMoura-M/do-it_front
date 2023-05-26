@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
-import LoginInfo from "./LoginInfo";
-import LoginForm from "../../components/Forms/LoginForm";
+import { SignUpInfo } from "./SignUpInfo";
+import SignUpForm from "../../components/Forms/SignUpForm";
 
-export const Login = () => {
+export const SignUp = () => {
   return (
     <Flex
       p={["10px 15px", "10px 15px", 0, 0]}
@@ -22,8 +22,8 @@ export const Login = () => {
         flexDirection={["column", "column", "row", "row"]}
         alignItems={"center"}
       >
-        <LoginInfo />
-        <LoginForm />
+        <SignUpForm />
+        <SignUpInfo />
       </Flex>
     </Flex>
   );

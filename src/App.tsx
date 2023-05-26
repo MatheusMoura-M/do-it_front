@@ -1,8 +1,7 @@
-import React from "react";
 import { ServerRoutes } from "./routes";
 
-function App() {
+const App = () => {
   return <ServerRoutes />;
-}
+};
 
 export default App;

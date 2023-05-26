@@ -7,7 +7,7 @@ import {
   InputGroup,
 } from "@chakra-ui/react";
 
-import { InputProps } from "../../types";
+import { iInputProps } from "../../interfaces";
 import {
   ForwardRefRenderFunction,
   forwardRef,
@@ -27,7 +27,7 @@ const inputVariation: inputVariationOptions = {
   filled: "green.500",
 };
 
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, iInputProps> = (
   { name, error = null, icon: Icon, label, ...rest },
   ref
 ) => {

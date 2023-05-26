@@ -1,7 +1,10 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles/theme";
-import { iProviderProps } from "../types";
+import { AuthProvider } from "./AuthContext";
+import { iProviderProps } from "../interfaces";
 
 export const AppProvider = ({ children }: iProviderProps) => (
-  <ChakraProvider theme={theme}>{children}</ChakraProvider>
+  <AuthProvider>
+    <ChakraProvider theme={theme}>{children}</ChakraProvider>
+  </AuthProvider>
 );
