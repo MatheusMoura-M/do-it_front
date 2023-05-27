@@ -1,12 +1,14 @@
 import { iSignInData, iProviderProps, iUser, iAuthState } from "../interfaces";
 import { createContext, useContext, useState, useCallback } from "react";
 import { api } from "../services";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface iAuthContextData {
   user: iUser;
   accessToken: string;
   signIn: (credentials: iSignInData) => Promise<void>;
   signOut: () => void;
+  navigate: NavigateFunction;
 }
 
 const AuthContext = createContext<iAuthContextData>({} as iAuthContextData);
@@ -21,6 +23,8 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }: iProviderProps) => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<iAuthState>(() => {
     const accessToken = localStorage.getItem("@Doit:accessToken");
     const user = localStorage.getItem("@Doit:user");
@@ -55,6 +59,7 @@ const AuthProvider = ({ children }: iProviderProps) => {
         user: data.user,
         signIn,
         signOut,
+        navigate,
       }}
     >
       {children}

@@ -10,7 +10,7 @@ const breakpoints = {
 
 export const theme = extendTheme({
   breakpoints,
-  color: {
+  colors: {
     purple: {
       500: "#8615df",
       600: "#570e91",

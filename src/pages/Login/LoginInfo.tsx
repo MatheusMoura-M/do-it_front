@@ -3,7 +3,7 @@ import LogoSecondary from "../../assets/logo-secondary.svg";
 
 const LoginInfo = () => {
   return (
-    <Grid w={["100%", "100%", "50%", "40%"]} paddingRight={"100px"}>
+    <Grid w={["100%", "100%", "50%", "40%"]} pr={"100px"}>
       <Image
         src={LogoSecondary}
         alt="doit"

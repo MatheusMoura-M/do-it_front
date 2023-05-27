@@ -13,6 +13,7 @@ export const Login = () => {
         "linear(to-b, purple.800 65%, white 35%)",
         "linear(to-b, purple.800 65%, white 35%)",
         "linear(to-r, purple.800 65%, white 35%)",
+        "linear(to-r, purple.800 65%, white 35%)",
       ]}
       color={"white"}
     >

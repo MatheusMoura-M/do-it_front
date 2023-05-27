@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 import { Input } from "../Input";
 
 const LoginForm = () => {
-  const { signIn } = useAuth();
+  const { signIn, navigate } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -85,6 +85,7 @@ const LoginForm = () => {
           h={"60px"}
           borderRadius={8}
           _hover={{ bg: "gray.200" }}
+          onClick={() => navigate("/signup")}
         >
           Register
         </Button>
