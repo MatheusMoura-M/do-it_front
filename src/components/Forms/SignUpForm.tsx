@@ -63,8 +63,8 @@ const SignUpForm = () => {
     <>
       <ModalSuccess
         buttonMessage="Ir para o login agora"
-        message="Seu cadastro deu super certo, vamos lá"
-        secondaryText="Você já pode começar criando suas listas de tarefas agora mesmo..."
+        message="Seu cadastro deu super certo, <b> vamos lá </b>"
+        secondaryText="Você já pode começar criando <b> suas listas </b> de tarefas agora mesmo..."
         onClick={() => navigate("/")}
         isOpen={isModalSuccessOpen}
         onClose={onModalSuccessClose}

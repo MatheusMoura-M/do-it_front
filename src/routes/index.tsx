@@ -9,9 +9,9 @@ export const ServerRoutes = () => {
     <Routes>
       <Route index path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route element={<PrivateRoutes />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
+      {/* <Route element={<PrivateRoutes />}> */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      {/* </Route> */}
     </Routes>
   );
 };

@@ -1,5 +1,10 @@
-import { Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Header from "../../components/Header";
 
 export const Dashboard = () => {
-  return <Text>Dash</Text>;
+  return (
+    <Box>
+      <Header />
+    </Box>
+  );
 };

@@ -46,10 +46,10 @@ const AuthProvider = ({ children }: iProviderProps) => {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem("@Doit:accessToken");
-    localStorage.removeItem("@Doit:user");
+    window.localStorage.clear();
 
     setData({} as iAuthState);
+    navigate("/");
   }, []);
 
   return (

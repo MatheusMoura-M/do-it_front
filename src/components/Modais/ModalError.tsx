@@ -34,9 +34,12 @@ function ModalError({ isOpen, onClose }: ModalErrorProps) {
         <ModalCloseButton
           bg="red.600"
           color="white"
+          w={"30px"}
+          h={"30px"}
           _hover={{ bg: "red.700" }}
           fontWeight="bold"
         />
+        <ModalCloseButton />
         <ModalBody textAlign="center">
           <Text>Ocorreu algum erro!</Text>
         </ModalBody>
@@ -45,9 +48,9 @@ function ModalError({ isOpen, onClose }: ModalErrorProps) {
             bg="red.600"
             color="white"
             w="100%"
+            h="60px"
             _hover={{ bg: "red.700" }}
             onClick={onClose}
-            h="60px"
           >
             Tentar novamente
           </Button>
