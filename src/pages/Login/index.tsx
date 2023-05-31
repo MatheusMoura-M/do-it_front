@@ -18,8 +18,8 @@ export const Login = () => {
       color={"white"}
     >
       <Flex
-        w={["100%", "100%", "90%", "65%"]}
-        justifyContent={"center"}
+        w={"100%"}
+        justifyContent={{ base: "center", md: "space-evenly" }}
         flexDirection={["column", "column", "row", "row"]}
         alignItems={"center"}
       >

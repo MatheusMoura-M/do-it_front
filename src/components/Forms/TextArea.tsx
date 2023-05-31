@@ -2,19 +2,18 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
+  Textarea as ChakraTextarea,
   InputLeftElement,
   InputGroup,
 } from "@chakra-ui/react";
-
-import { iInputProps, inputVariationOptions } from "../../interfaces";
 import {
+  useState,
+  useEffect,
+  useCallback,
   ForwardRefRenderFunction,
   forwardRef,
-  useCallback,
-  useEffect,
-  useState,
 } from "react";
+import { iTextAreaProps, inputVariationOptions } from "../../interfaces";
 
 const inputVariation: inputVariationOptions = {
   error: "red.500",
@@ -23,10 +22,10 @@ const inputVariation: inputVariationOptions = {
   filled: "green.500",
 };
 
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, iInputProps> = (
-  { name, error = null, icon: Icon, label, ...rest },
-  ref
-) => {
+const TextAreaBase: ForwardRefRenderFunction<
+  HTMLTextAreaElement,
+  iTextAreaProps
+> = ({ name, error = null, icon: Icon, label, ...rest }, ref) => {
   const [value, setValue] = useState("");
   const [variation, setVariation] = useState("default");
 
@@ -38,7 +37,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, iInputProps> = (
 
   const handleInputFocus = useCallback(() => {
     if (!error) {
-      return setVariation("focus");
+      setVariation("focus");
     }
   }, [error]);
 
@@ -50,43 +49,33 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, iInputProps> = (
 
   return (
     <FormControl isInvalid={!!error}>
-      {!!label && <FormLabel color={"gray.400"}>{label}</FormLabel>}
-
-      <InputGroup flexDirection={"column"}>
+      {!!label && <FormLabel>{label}</FormLabel>}
+      <InputGroup flexDirection="column">
         {Icon && (
-          <InputLeftElement color={inputVariation[variation]} mt={2.5}>
+          <InputLeftElement mt="2.5" color={inputVariation[variation]}>
             <Icon />
           </InputLeftElement>
         )}
-
-        <ChakraInput
-          name={name}
-          bg={"gray.50"}
-          color={inputVariation[variation]}
-          borderColor={inputVariation[variation]}
-          ref={ref}
+        <ChakraTextarea
           onFocus={handleInputFocus}
           onBlurCapture={handleInputBlur}
-          onChangeCapture={(e) =>
-            setValue((e.target as HTMLInputElement).value)
-          }
-          variant={"outline"}
+          onChangeCapture={(e) => setValue(e.currentTarget.value)}
+          name={name}
+          bg="gay.50"
+          color={inputVariation[variation]}
+          borderColor={inputVariation[variation]}
+          variant="outline"
           _hover={{ bgColor: "gray.100" }}
           _placeholder={{ color: "gray.300" }}
-          _focus={{
-            bg: "gray.100",
-          }}
-          size={"lg"}
-          h={"60px"}
+          size="lg"
+          h="60px"
+          ref={ref}
           {...rest}
         />
-
-        {!!error && (
-          <FormErrorMessage color={"red.500"}>{error.message}</FormErrorMessage>
-        )}
+        {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
       </InputGroup>
     </FormControl>
   );
 };
 
-export const Input = forwardRef(InputBase);
+export const TextArea = forwardRef(TextAreaBase);

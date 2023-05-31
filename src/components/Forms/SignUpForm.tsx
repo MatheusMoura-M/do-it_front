@@ -17,7 +17,7 @@ import { SignUpSchema } from "../../schemas/SignUp";
 import { api } from "../../services";
 import ModalError from "../Modais/ModalError";
 import ModalSuccess from "../Modais/ModalSuccess";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SignUpForm = () => {
   const { navigate } = useAuth();

@@ -12,7 +12,7 @@ import {
   theme,
 } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface MenuProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ function Menu({ isOpen, onClose }: MenuProps) {
 
   return (
     <Drawer placement="top" onClose={onClose} isOpen={isOpen}>
-      <DrawerOverlay mt="9vh" />
+      <DrawerOverlay mt={["13vh", "9vh"]} />
       <DrawerContent ml="auto" mt="80px" w={["450px", "350px"]}>
         <DrawerHeader
           h="80px"

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignInSchema } from "../../schemas/SignIn";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Input } from "../Input";
 
 const LoginForm = () => {
@@ -33,6 +33,8 @@ const LoginForm = () => {
       as="form"
       mt={[4, 4, 0]}
       w={["100%", "100%", "40%", "40%"]}
+      maxW={{ base: "unset", md: 400 }}
+      minW={{ base: "unset", md: 331 }}
       p={"30px 15px"}
       border={"3px solid"}
       borderRadius={5}
@@ -40,7 +42,9 @@ const LoginForm = () => {
       bg={"white"}
       color={"gray.900"}
     >
-      <Heading size={"lg"}>Bem vindo de volta !</Heading>
+      <Heading size={"lg"} textAlign={"center"}>
+        Bem vindo de volta !
+      </Heading>
       <VStack mt={6} spacing={5}>
         <Box w={"100%"}>
           <Input

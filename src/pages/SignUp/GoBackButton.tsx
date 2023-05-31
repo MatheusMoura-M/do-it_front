@@ -1,6 +1,6 @@
 import { Center } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface GoBackButtonProps {
   top: string[];
