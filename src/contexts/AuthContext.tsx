@@ -28,6 +28,7 @@ const AuthProvider = ({ children }: iProviderProps) => {
   const [data, setData] = useState<iAuthState>(() => {
     const accessToken = localStorage.getItem("@Doit:accessToken");
     const user = localStorage.getItem("@Doit:user");
+
     if (accessToken && user) {
       return { accessToken, user: JSON.parse(user) };
     }
@@ -36,7 +37,6 @@ const AuthProvider = ({ children }: iProviderProps) => {
 
   const signIn = useCallback(async ({ email, password }: iSignInData) => {
     const response = await api.post("/login", { email, password });
-
     const { accessToken, user } = response.data;
 
     localStorage.setItem("@Doit:accessToken", accessToken);

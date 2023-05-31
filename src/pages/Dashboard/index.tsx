@@ -6,7 +6,7 @@ import TasksLists from "./TasksList";
 import FirstTask from "./FirstTask";
 import NotFound from "./NotFound";
 import { iTaskCard } from "../../interfaces";
-import { Text, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -25,9 +25,9 @@ const Dashboard = () => {
     onTaskDetailOpen();
   };
 
-  // useEffect(() => {
-  //   loadTasks(user.id, accessToken).then((res) => setLoading(false));
-  // }, []);
+  useEffect(() => {
+    loadTasks(user.id, accessToken).then((res) => setLoading(false));
+  }, []);
 
   if (notFound) {
     return (
