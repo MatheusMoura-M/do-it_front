@@ -16,9 +16,10 @@ import { theme } from "../../styles/theme";
 interface ModalErrorProps {
   isOpen: boolean;
   onClose: () => void;
+  error: string;
 }
 
-function ModalError({ isOpen, onClose }: ModalErrorProps) {
+function ModalError({ isOpen, onClose, error }: ModalErrorProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -41,7 +42,9 @@ function ModalError({ isOpen, onClose }: ModalErrorProps) {
         />
         <ModalCloseButton />
         <ModalBody textAlign="center">
-          <Text>Ocorreu algum erro!</Text>
+          <Text>
+            Ocorreu algum erro! <b>{error}</b>
+          </Text>
         </ModalBody>
         <ModalFooter flexDirection="column">
           <Button

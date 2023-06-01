@@ -1,6 +1,6 @@
 import { iSignInData, iProviderProps, iUser, iAuthState } from "../interfaces";
 import { createContext, useContext, useState, useCallback } from "react";
-import { api } from "../services";
+import { api } from "../services/api";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface iAuthContextData {
@@ -39,10 +39,11 @@ const AuthProvider = ({ children }: iProviderProps) => {
     const response = await api.post("/login", { email, password });
     const { accessToken, user } = response.data;
 
+    setData({ accessToken, user });
+
     localStorage.setItem("@Doit:accessToken", accessToken);
     localStorage.setItem("@Doit:user", JSON.stringify(user));
-
-    setData({ accessToken, user });
+    navigate("/dashboard");
   }, []);
 
   const signOut = useCallback(() => {

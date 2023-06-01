@@ -14,14 +14,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Input } from "../Input";
 import { SignUpSchema } from "../../schemas/SignUp";
-import { api } from "../../services";
+import { api } from "../../services/api";
 import ModalError from "../Modais/ModalError";
 import ModalSuccess from "../Modais/ModalSuccess";
 import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const { navigate } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     formState: { errors },
@@ -46,16 +49,18 @@ const SignUpForm = () => {
   const handleSignUp = ({ name, email, password }: iSignUpData) => {
     setLoading(true);
     api
-      .post("/register", { name, email, password })
+      .post("/user", { name, email, password })
       .then((response) => {
-        console.log(response);
         setLoading(false);
         onModalSuccessOpen();
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoading(false);
-        console.log(err);
         onModalErrorOpen();
+        console.log(error);
+        if (axios.isAxiosError(error)) {
+          setError(error.response?.data.error);
+        }
       });
   };
 
@@ -69,7 +74,11 @@ const SignUpForm = () => {
         isOpen={isModalSuccessOpen}
         onClose={onModalSuccessClose}
       />
-      <ModalError isOpen={isModalErrorOpen} onClose={onModalErrorClose} />
+      <ModalError
+        isOpen={isModalErrorOpen}
+        onClose={onModalErrorClose}
+        error={`${error}`}
+      />
       <Grid
         onSubmit={handleSubmit(handleSignUp)}
         as="form"

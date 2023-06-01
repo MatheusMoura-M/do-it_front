@@ -31,21 +31,15 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, iInputProps> = (
   const [variation, setVariation] = useState("default");
 
   useEffect(() => {
-    if (error) {
-      return setVariation("error");
-    }
+    error && setVariation("error");
   }, [error]);
 
   const handleInputFocus = useCallback(() => {
-    if (!error) {
-      return setVariation("focus");
-    }
+    error && setVariation("focus");
   }, [error]);
 
   const handleInputBlur = useCallback(() => {
-    if (value.length > 1 && !error) {
-      return setVariation("filled");
-    }
+    value.length > 1 && !error && setVariation("filled");
   }, [error, value]);
 
   return (

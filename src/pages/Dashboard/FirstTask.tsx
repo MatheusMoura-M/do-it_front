@@ -41,7 +41,12 @@ function FirstTask() {
         <Text color={"gray.400"} mt="6">
           Insira sua meta e mostra a você mesmo <br />
           sua capacidade em cumprir{" "}
-          <Text fontWeight={"bold"} display={"inline-block"} color={"gray.900"}>
+          <Text
+            as={"span"}
+            fontWeight={"bold"}
+            display={"inline-block"}
+            color={"gray.900"}
+          >
             suas atividades
           </Text>
         </Text>

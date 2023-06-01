@@ -24,8 +24,8 @@ function Menu({ isOpen, onClose }: MenuProps) {
 
   return (
     <Drawer placement="top" onClose={onClose} isOpen={isOpen}>
-      <DrawerOverlay mt={["13vh", "9vh"]} />
-      <DrawerContent ml="auto" mt="80px" w={["450px", "350px"]}>
+      <DrawerOverlay mt={["12vh", "11vh"]} />
+      <DrawerContent ml="auto" mt="75px" w={["450px", "350px"]}>
         <DrawerHeader
           h="80px"
           borderBottomWidth="1px"

@@ -51,7 +51,7 @@ function ModalSuccess({
           _hover={{ bg: "red.700" }}
         />
         <ModalBody textAlign="center">
-          <Text>
+          <Text as={"span"}>
             <Box
               dangerouslySetInnerHTML={{
                 __html: message,
@@ -70,7 +70,7 @@ function ModalSuccess({
           >
             {buttonMessage}
           </Button>
-          <Text align="center" mt="4">
+          <Text as={"span"} align="center" mt="4">
             <Box
               dangerouslySetInnerHTML={{
                 __html: secondaryText,

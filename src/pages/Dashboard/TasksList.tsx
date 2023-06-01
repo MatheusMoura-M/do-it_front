@@ -4,6 +4,8 @@ import SearchBox from "../../components/Forms/SearchBox";
 import Header from "../../components/Header";
 import { CardSkeleton } from "../../components/Skeleton/CardSkeleton";
 import { iTaskCard } from "../../interfaces";
+import { useTasks } from "../../contexts/TasksContext";
+import { useEffect } from "react";
 
 interface TasksListsProsps {
   loading: boolean;
@@ -12,6 +14,22 @@ interface TasksListsProsps {
 }
 
 const TasksLists = ({ loading, tasks, handleClick }: TasksListsProsps) => {
+  const { inputTitleValue } = useTasks();
+
+  const pageCard = () => {
+    let cards: any = [];
+
+    tasks.map((task) => {
+      task.title.includes(inputTitleValue) && cards.push(task);
+    });
+
+    return cards;
+  };
+
+  useEffect(() => {
+    pageCard();
+  }, [inputTitleValue]);
+
   return (
     <Box>
       <Header />
@@ -26,7 +44,7 @@ const TasksLists = ({ loading, tasks, handleClick }: TasksListsProsps) => {
         {loading ? (
           <CardSkeleton repeatCount={6} />
         ) : (
-          tasks.map((task) => (
+          pageCard().map((task: iTaskCard) => (
             <Card onClick={handleClick} key={task.title} task={task} />
           ))
         )}

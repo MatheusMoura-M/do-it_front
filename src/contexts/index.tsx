@@ -4,10 +4,12 @@ import { AuthProvider } from "./AuthContext";
 import { iProviderProps } from "../interfaces";
 import { TaskProvider } from "./TasksContext";
 
-export const AppProvider = ({ children }: iProviderProps) => (
-  <AuthProvider>
-    <TaskProvider>
-      <ChakraProvider theme={theme}>{children}</ChakraProvider>
-    </TaskProvider>
-  </AuthProvider>
-);
+export const AppProvider = ({ children }: iProviderProps) => {
+  return (
+    <AuthProvider>
+      <TaskProvider>
+        <ChakraProvider theme={theme}>{children}</ChakraProvider>
+      </TaskProvider>
+    </AuthProvider>
+  );
+};

@@ -3,20 +3,14 @@ import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 import { useTasks } from "../../contexts/TasksContext";
 import { Input } from "../Input";
-import { useAuth } from "../../contexts/AuthContext";
 import ModalCreateTask from "../Modais/ModalCreateTasks";
 import { iSearchData } from "../../interfaces";
 
 const SearchBox = () => {
+  const { setInputTitleValue } = useTasks();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { searchTask } = useTasks();
-  const { accessToken } = useAuth();
 
-  const { handleSubmit, register } = useForm<iSearchData>({});
-
-  const handleSearch = ({ title }: iSearchData) => {
-    searchTask(title, accessToken);
-  };
+  const { register } = useForm<iSearchData>({});
 
   return (
     <>
@@ -31,11 +25,12 @@ const SearchBox = () => {
         borderColor="gray.50"
         flexDirection={["column", "column", "row", "row"]}
       >
-        <Flex as="form" onSubmit={handleSubmit(handleSearch)}>
+        <Flex as="form">
           <Input
             placeholder="Pesquisar por tarefas"
             w={["100%", "100%", "35vw"]}
             {...register("title")}
+            onChange={(e) => setInputTitleValue(e.target.value)}
           />
           <Center
             as="button"

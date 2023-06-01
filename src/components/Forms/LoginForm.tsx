@@ -7,6 +7,8 @@ import { SignInSchema } from "../../schemas/SignIn";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Input } from "../Input";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const { signIn, navigate } = useAuth();
@@ -24,7 +26,15 @@ const LoginForm = () => {
     setLoading(true);
     signIn(data)
       .then((_) => setLoading(false))
-      .catch((err) => setLoading(false));
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+        if (axios.isAxiosError(error)) {
+          toast.error(error.response?.data.error, {
+            autoClose: 1000,
+          });
+        }
+      });
   };
 
   return (

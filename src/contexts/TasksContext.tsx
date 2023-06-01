@@ -1,7 +1,8 @@
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { createContext, useCallback, useContext, useState } from "react";
-import { api } from "../services";
+import { api } from "../services/api";
 import { iProviderProps, iTask } from "../interfaces";
+import { toast } from "react-toastify";
 
 interface TaskContextData {
   tasks: iTask[];
@@ -13,9 +14,10 @@ interface TaskContextData {
     userId: string,
     accessToken: string
   ) => Promise<void>;
-  searchTask: (taskTitle: string, accessToken: string) => Promise<void>;
   notFound: boolean;
   taskNotFound: string;
+  inputTitleValue: string;
+  setInputTitleValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TaskContext = createContext<TaskContextData>({} as TaskContextData);
@@ -30,32 +32,49 @@ const useTasks = () => {
 
 const TaskProvider = ({ children }: iProviderProps) => {
   const [tasks, setTasks] = useState<iTask[]>([]);
+  const [inputTitleValue, setInputTitleValue] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [taskNotFound, setTaskNotFound] = useState("");
 
   const loadTasks = useCallback(async (userId: string, accessToken: string) => {
     try {
-      const resp = await api.get(`/tasks?userId=${userId}`, {
+      const resp = await api.get("/task/user", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
       setTasks(resp.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.error, {
+          autoClose: 1000,
+        });
+      }
     }
   }, []);
 
   const createTask = useCallback(
     async (data: Omit<iTask, "id">, accessToken: string) => {
       await api
-        .post("/tasks", data, {
+        .post("/task", data, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         })
-        .then((response: AxiosResponse<iTask>) =>
-          setTasks((oldTask) => [...oldTask, response.data])
-        )
-        .catch((err) => console.log(err));
+        .then((response: AxiosResponse<iTask>) => {
+          setTasks((oldTask) => [...oldTask, response.data]);
+          toast.success("Task criada com sucesso", {
+            autoClose: 1000,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data.error, {
+              autoClose: 1000,
+            });
+          }
+        });
     },
     []
   );
@@ -63,7 +82,7 @@ const TaskProvider = ({ children }: iProviderProps) => {
   const deleteTask = useCallback(
     async (taskId: string, accessToken: string) => {
       await api
-        .delete(`/tasks/${taskId}`, {
+        .delete(`/task/${taskId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -71,8 +90,18 @@ const TaskProvider = ({ children }: iProviderProps) => {
         .then((_) => {
           const filteredTasks = tasks.filter((task) => taskId !== task.id);
           setTasks(filteredTasks);
+          toast.success("Task deletada com sucesso", {
+            autoClose: 1000,
+          });
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          console.log(error);
+          if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data.error, {
+              autoClose: 1000,
+            });
+          }
+        });
     },
     [tasks]
   );
@@ -81,7 +110,7 @@ const TaskProvider = ({ children }: iProviderProps) => {
     async (taskId: string, userId: string, accessToken: string) => {
       await api
         .patch(
-          `/tasks/${taskId}`,
+          `/task/${taskId}`,
           { completed: true, userId },
           {
             headers: {
@@ -89,7 +118,7 @@ const TaskProvider = ({ children }: iProviderProps) => {
             },
           }
         )
-        .then((response) => {
+        .then((_) => {
           const filteredTasks = tasks.filter((task) => task.id !== taskId);
           const task = tasks.find((task) => task.id === taskId);
           if (task) {
@@ -97,26 +126,16 @@ const TaskProvider = ({ children }: iProviderProps) => {
             setTasks([...filteredTasks, task]);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          console.log(error);
+          if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data.error, {
+              autoClose: 1000,
+            });
+          }
+        });
     },
     [tasks]
-  );
-
-  const searchTask = useCallback(
-    async (taskTitle: string, accessToken: string) => {
-      const response = await api.get(`/tasks?title_like=${taskTitle}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      if (!response.data.length) {
-        setTaskNotFound(taskTitle);
-        return setNotFound(true);
-      }
-      setNotFound(false);
-      setTasks(response.data);
-    },
-    []
   );
 
   return (
@@ -127,9 +146,10 @@ const TaskProvider = ({ children }: iProviderProps) => {
         loadTasks,
         deleteTask,
         updateTask,
-        searchTask,
         notFound,
         taskNotFound,
+        inputTitleValue,
+        setInputTitleValue,
       }}
     >
       {children}
